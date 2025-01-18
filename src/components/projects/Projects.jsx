@@ -32,7 +32,7 @@ export default function Projects() {
   return (
     <section data-aos='fade-up' data-aos-delay='400' id='projects' className='relative overflow-hidden flex flex-col text-white body-font'>
         <div className='container px-5 py-24 mx-auto'>
-            <h2 className='text-4xl font-bold text-center mb-12'>My Projects</h2>
+            <h2 className='sm:text-5xl text-3xl font-bold title-font text-gradient text-orange-500 bg-clip-text  text-center mb-12'>My Projects</h2>
             <Slider {...settings}>
                 {
                     listProjects.map((project)=>{

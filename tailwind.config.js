@@ -5,8 +5,30 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        zoomRotate: 'zoomRotate 1.5s ease-in-out infinite',
+        "spin-slow": "spin 5s linear infinite",
+      },
+      keyframes: {
+        zoomRotate: {
+          '0%, 100%': {
+            transform: 'scale(1.1) rotate(0deg)', // Zoomed in, original rotation
+          },
+          '50%': {
+            transform: 'scale(1.0) rotate(5deg)', // Zoomed out, rotated slightly to the right
+          },
+        },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        }
+      },
+      colors: {
+        primary: '#FFC107',
+        secondary: '#ff18b8',
+      }
+    },
   },
   plugins: [],
 }
-

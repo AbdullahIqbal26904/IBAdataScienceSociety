@@ -10,7 +10,7 @@ export default function Footer() {
         
     ];
   return (
-   <footer className='bg-gray-700 rounded-lg shadow'>
+   <section className='bg-gray-200 rounded-lg shadow'>
       <div className='w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between'>
         <span className='text-ms text-gray-200 sm:text-center'>
             2023 <a href='#' className='hover:underline'>Portfolio.</a>
@@ -25,6 +25,6 @@ export default function Footer() {
             }
         </ul>
       </div>
-   </footer>
+   </section>
   )
 }

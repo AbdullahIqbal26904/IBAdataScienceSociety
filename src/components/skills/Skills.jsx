@@ -1,52 +1,80 @@
-import React from 'react'
-import javascript from '../../assets/javascript.png'
-import html from '../../assets/html.png'
-import php from '../../assets/php.png'
-import webdesign from '../../assets/web-design.png'
-import laravel from '../../assets/laravel.png'
-import react from '../../assets/react.png'
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import Skillscircle from './Skillscircle';
 
 export default function Skills() {
-  return (
-    <section id='skills' className='relative overflow-hidden flex flex-col text-white body-font'>
-        <div className='container flex flex-wrap px-5 py-24 mx-auto items-center'>
-            <div 
-            data-aos='fade-up' 
-            data-aos-delay='200' 
-            className='md:w-1/2 md:pr-12 md:py-8 md:border-r md:border-b-0 mb-10 md:mb-0 pd-10 border-b border-orange-400'>
-                <h1 data-aos='fade-right' data-aos-delay='500' className='sm:text-4xl text-2xl font-medium title-font mb-2 text-white '>Skills</h1>
-                <p data-aos='fade-right' data-aos-delay='500' className='leading-relaxed text-base'>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam perferendis ut,
-                     rerum nulla labore ipsum aliquid magnam maxime esse.
-                     Sequi eveniet quos rerum vel itaque sunt dolores expedita delectus iusto!
-                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero ipsam ex facere et, at explicabo 
-                     corporis harum officia sint aspernatur, 
-                     optio eos commodi ipsa tempora tenetur quae perferendis, iste nisi.
-                </p>
+    const [skills, setSkills] = useState([]);
+    const { user } = useSelector((state) => state.allCart);
+
+    useEffect(() => {
+        const fetchSkills = async () => {
+            try {
+                const res = await fetch(`http://localhost:3003/skills/${user._id}`);
+                const data = await res.json();
+                setSkills(data);
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        if (user && user._id) {
+            fetchSkills();
+        }
+    }, [user]);
+
+    return (
+        <section id="skills" className="relative overflow-hidden flex flex-col text-white body-font">
+            {/* Background Gradients */}
+            <header className="absolute w-1/2 aspect-[16/5] -skew-x-12 rounded-full bg-gradient-to-r from-[#007cda] 
+                via-[#785ae4] to-primary opacity-20 blur-[100px] left-10 top-0 hidden md:block">
+            </header>
+            <header className="absolute w-1/2 aspect-[16/5] -skew-x-12 rounded-full bg-gradient-to-r from-[#007cda]
+                     via-[#785ae4] to-primary opacity-20 blur-[100px] right-10 bottom-0 hidden md:block">
+            </header>
+
+            <div className="container flex flex-col px-5 py-24 mx-auto items-center space-y-16">
+                {/* Top Column: Skills Heading & Text */}
+                <div
+                    data-aos="fade-up"
+                    data-aos-delay="100"
+                    className="w-full md:w-1/2 text-center space-y-8"
+                >
+                    <h1
+                        data-aos="fade-right"
+                        data-aos-delay="100"
+                        className="sm:text-5xl text-3xl font-bold title-font text-gradient text-orange-500 bg-clip-text  text-center mb-12"
+                    >
+                        My Skills
+                    </h1>
+                    <p
+                        data-aos="fade-right"
+                        data-aos-delay="100"
+                        className="leading-relaxed text-lg text-gray-400"
+                    >
+                        I have developed a wide range of technical skills that have helped me grow as a professional in various domains. From programming and problem-solving to design and user experience, my skill set is diverse and continuously evolving. Below, you can see a visual representation of my proficiency in each skill area. I continuously work on improving these skills through hands-on experience and learning.
+                    </p>
+                </div>
+
+                {/* Beautiful Horizontal Line */}
+                <hr className="w-full h-1 mx-auto bg-gradient-to-r from-[#007cda] to-primary rounded-full mb-12" />
+
+                {/* Bottom Column: Skills Circles */}
+                <div
+                    data-aos="fade-left"
+                    data-aos-delay="500"
+                    className="w-full flex flex-wrap justify-center gap-y-10"
+                >
+                    <ul className=" flex flex-wrap justify-center gap-20">
+                        {skills.map((skill, index) => (
+                            <li
+                                key={index}
+                            >
+                                <Skillscircle skill={skill} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
-            <div data-aos='fade-left' data-aos-delay='500' className='flex flex-col md:w-1/2 md:pl-12'>
-            <nav className='flex flex-wrap list-none -mb-1'>
-                <li className='lg:w-1/3 mb-4 w-1/2'>
-                    <img src={javascript} alt="" className='rounded-full w-24 h-24 object-cover'/>
-                </li>
-                <li className='lg:w-1/3 mb-4 w-1/2'>
-                    <img src={html} alt="" className='rounded-full w-24 h-24 object-cover'/>
-                </li>
-                <li className='lg:w-1/3 mb-4 w-1/2'>
-                    <img src={php} alt="" className='rounded-full w-24 h-24 object-cover'/>
-                </li>
-                <li className='lg:w-1/3 mb-4 w-1/2'>
-                    <img src={webdesign} alt="" className='rounded-full w-24 h-24 object-cover'/>
-                </li>
-                <li className='lg:w-1/3 mb-4 w-1/2'>
-                    <img src={laravel} alt="" className='rounded-full w-24 h-24 object-cover'/>
-                </li>
-                <li className='lg:w-1/3 mb-4 w-1/2'>
-                    <img src={react} alt="" className='rounded-full w-24 h-24 object-cover'/>
-                </li>
-            </nav>
-            </div>
-        </div>
-    </section>
-  )
+        </section>
+    );
 }
