@@ -61,7 +61,6 @@ function HeroSection() {
                                         </span>
                                     </h1>
                                     <h2 className="pt-1 text-white font-bold text-1xl md:text-2xl lg:text-3xl">
-                                        I am a{' '}
                                         <Typical
                                             steps={userBio}
                                             loop={Infinity}

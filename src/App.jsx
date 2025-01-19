@@ -36,8 +36,7 @@ export default function App() {
         <Numbers />
         <Skills />
       </div>
-      
-
+        <Education />
       <Experience />
       <Projects />
       <Language />

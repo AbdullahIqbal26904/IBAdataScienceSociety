@@ -13,7 +13,7 @@ export default function Education() {
       try {
         const data = await axios.get(`http://localhost:3003/education/${user._id}`);
         seteducation(data.data);
-        console.log(data.data);
+        // console.log(data.data);
       } catch (error) {
         console.log(error);
       }

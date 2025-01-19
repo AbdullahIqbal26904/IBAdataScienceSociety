@@ -12,7 +12,7 @@ export default function Skills() {
                 const res = await fetch(`http://localhost:3003/skills/${user._id}`);
                 const data = await res.json();
                 setSkills(data);
-                console.log(data);
+                // console.log(data);
             } catch (error) {
                 console.log(error);
             }
@@ -65,8 +65,9 @@ export default function Skills() {
                     className="w-full flex flex-wrap justify-center gap-y-10"
                 >
                     <ul className=" flex flex-wrap justify-center gap-20">
-                        {skills.map((skill, index) => (
+                        {skills && skills.map((skill, index) => (
                             <li
+                            className='animate-float-up'
                                 key={index}
                             >
                                 <Skillscircle skill={skill} />
