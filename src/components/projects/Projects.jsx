@@ -9,13 +9,14 @@ export default function Projects() {
     const { user } = useSelector((state) => state.allCart);
     const [fprojects, setProjects] = useState([]);
     const [hoveredProject, setHoveredProject] = useState(null);
-
+    const [loading, setLoading] = useState(true); // Add loading state
     useEffect(() => {
         const getProjects = async () => {
             try {
                 const res = await axios.get(`https://portfoliobackend-cpj1.onrender.com/projects/${user._id}`);
                 console.log(res.data);
                 setProjects(res.data);
+                setLoading(false); 
             } catch (err) {
                 console.error('Error fetching projects:', err);
             }
@@ -39,7 +40,16 @@ export default function Projects() {
             },
         ],
     };
-
+    if (loading) {
+        // Display loading screen or spinner
+        return (
+            <div className="relative flex items-center justify-center min-h-screen bg-gray-900">
+                <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-primary" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        );
+    }
     return (
         <section
             data-aos="fade-up"

@@ -5,13 +5,14 @@ import Skillscircle from './Skillscircle';
 export default function Skills() {
     const [skills, setSkills] = useState([]);
     const { user } = useSelector((state) => state.allCart);
-
+    const [loading, setLoading] = useState(true); // Add loading state
     useEffect(() => {
         const fetchSkills = async () => {
             try {
                 const res = await fetch(`https://portfoliobackend-cpj1.onrender.com/skills/${user._id}`);
                 const data = await res.json();
                 setSkills(data);
+                setLoading(false); 
                 // console.log(data);
             } catch (error) {
                 console.log(error);
@@ -21,7 +22,16 @@ export default function Skills() {
             fetchSkills();
         }
     }, [user]);
-
+    if (loading) {
+        // Display loading screen or spinner
+        return (
+            <div className="relative flex items-center justify-center min-h-screen bg-gray-900">
+                <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-primary" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        );
+    }
     return (
         <section id="skills" className="relative overflow-hidden flex flex-col text-white body-font">
             {/* Background Gradients */}

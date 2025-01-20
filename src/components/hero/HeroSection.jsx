@@ -13,6 +13,7 @@ function HeroSection() {
     const { user } = useSelector((state) => state.allCart);
     const [data, setData] = useState(true);
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(true); // Add loading state
     const [userBio, setuserBio] = useState([]);
     useEffect(() => {
         if (data) {
@@ -21,6 +22,7 @@ function HeroSection() {
                     setData(false);
                     dispatch(setUser(res.data[0]));
                     setuserBio(splitSentences(res.data[0].bio));
+                    setLoading(false); 
                     // console.log(splitSentences(res.data[0].bio));   
                 })
                 .catch(err => {
@@ -33,7 +35,16 @@ function HeroSection() {
         // Add a delay of 1000ms after each sentence
         return sentences.flatMap(sentence => [sentence, 1000]);
     }
-
+    if (loading) {
+        // Display loading screen or spinner
+        return (
+            <div className="relative flex items-center justify-center min-h-screen bg-gray-900">
+                <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-primary" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            </div>
+        );
+    }
     return (
         <section id='' className="relative">
             {/* Gradient Headers */}
