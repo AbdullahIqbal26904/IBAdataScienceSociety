@@ -42,7 +42,7 @@ const Admin = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3003/projects/addProject', data, {
+            const response = await axios.post('https://portfoliobackend-cpj1.onrender.com/projects/addProject', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

@@ -8,12 +8,12 @@ import { useSelector } from 'react-redux';
 export default function Projects() {
     const { user } = useSelector((state) => state.allCart);
     const [fprojects, setProjects] = useState([]);
-    const [hoveredProject, setHoveredProject] = useState(null); // Track hovered project
+    const [hoveredProject, setHoveredProject] = useState(null);
 
     useEffect(() => {
         const getProjects = async () => {
             try {
-                const res = await axios.get(`http://localhost:3003/projects/${user._id}`);
+                const res = await axios.get(`https://portfoliobackend-cpj1.onrender.com/projects/${user._id}`);
                 console.log(res.data);
                 setProjects(res.data);
             } catch (err) {
@@ -55,7 +55,7 @@ export default function Projects() {
                     <Slider {...settings}>
                         {fprojects.map((project, index) => (
                             <div
-                                key={project._id} // Unique key
+                                key={project._id}
                                 className="p-4"
                                 onMouseEnter={() => setHoveredProject(index)}
                                 onMouseLeave={() => setHoveredProject(null)}
@@ -68,13 +68,10 @@ export default function Projects() {
                                             loop
                                             muted
                                             className="w-full h-auto lg:h-48 md:h-36 sm:h-24 object-cover object-center"
-                                            // onError={(e) => {
-                                            //     e.target.style.display = 'none'; // Hide video if it fails to load
-                                            // }}
                                         />
                                     ) : (
                                         <img
-                                            src={project.projects.images?.[0] || '/default-image.jpg'} // Fallback to default image
+                                            src={project.projects.images?.[0] || '/default-image.jpg'}
                                             alt={project.projects.title}
                                             className="w-full h-auto lg:h-48 md:h-36 sm:h-24 object-cover object-center"
                                         />
@@ -84,6 +81,34 @@ export default function Projects() {
                                             {project.projects.title}
                                         </h2>
                                         <p className="leading-relaxed mb-3">{project.projects.description}</p>
+                                        <div className="mb-3">
+                                            <h3 className="text-orange-400 font-semibold">Technologies:</h3>
+                                            <ul className="list-disc list-inside text-gray-300">
+                                                {project.projects.technologies.map((tech, i) => (
+                                                    <li key={i}>{tech}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <a
+                                                href={project.projects.github_link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-blue-500 hover:underline"
+                                            >
+                                                GitHub
+                                            </a>
+                                            {project.projects.live_demo && (
+                                                <a
+                                                    href={project.projects.live_demo}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-500 hover:underline"
+                                                >
+                                                    Live Demo
+                                                </a>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

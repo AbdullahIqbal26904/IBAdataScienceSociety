@@ -9,7 +9,7 @@ export default function Skills() {
     useEffect(() => {
         const fetchSkills = async () => {
             try {
-                const res = await fetch(`http://localhost:3003/skills/${user._id}`);
+                const res = await fetch(`https://portfoliobackend-cpj1.onrender.com/skills/${user._id}`);
                 const data = await res.json();
                 setSkills(data);
                 // console.log(data);

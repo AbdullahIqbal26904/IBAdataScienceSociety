@@ -16,7 +16,7 @@ function HeroSection() {
     const [userBio, setuserBio] = useState([]);
     useEffect(() => {
         if (data) {
-            axios.get('http://localhost:3003/users/')
+            axios.get('https://portfoliobackend-cpj1.onrender.com/users/')
                 .then(res => {
                     setData(false);
                     dispatch(setUser(res.data[0]));

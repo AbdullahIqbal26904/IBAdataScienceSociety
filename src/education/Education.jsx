@@ -11,7 +11,7 @@ export default function Education() {
   useEffect(() => {
     const fetchEducation = async () => {
       try {
-        const data = await axios.get(`http://localhost:3003/education/${user._id}`);
+        const data = await axios.get(`https://portfoliobackend-cpj1.onrender.com/education/${user._id}`);
         seteducation(data.data);
         // console.log(data.data);
       } catch (error) {
