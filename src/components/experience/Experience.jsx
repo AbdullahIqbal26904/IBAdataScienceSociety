@@ -6,8 +6,8 @@ export default function Experience() {
   return (
 
     <section id='experience' className='relative overflow-hidden flex flex-col items-center justify-center text-gray-600 body-font mt-40'>
-      <h1 data-aos='fade-up' data-aos-delay='400' className='sm:text-5xl text-3xl font-bold title-font text-gradient text-orange-500 bg-clip-text  text-center mb-12 '>Experience</h1>
-      <div className='absolute top-[100px] left-64 inset-x-0 flex items-start justify-center'>
+      <h1 data-aos='fade-up' data-aos-delay='400' className='sm:text-5xl text-3xl font-bold title-font text-gradient text-orange-500 bg-clip-text  text-center '>Experience</h1>
+      <div className='absolute left-64 inset-x-0 flex items-start justify-center'>
         <div className='h-96 w-96 bg-gradient-to-br from-[#ff910a] blur-2xl invisible opacity-40 rounded-full'></div>
         <div className='h-96 w-96 bg-gradient-to-r from-[#ffdb12] opacity-40 blur-2xl rounded-full'></div>
       </div>

@@ -9,14 +9,15 @@ export default function Projects() {
     const { user } = useSelector((state) => state.allCart);
     const [fprojects, setProjects] = useState([]);
     const [hoveredProject, setHoveredProject] = useState(null);
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const getProjects = async () => {
             try {
                 const res = await axios.get(`https://portfoliobackend-cpj1.onrender.com/projects/${user._id}`);
                 console.log(res.data);
                 setProjects(res.data);
-                setLoading(false); 
+                setLoading(false);
             } catch (err) {
                 console.error('Error fetching projects:', err);
             }
@@ -40,8 +41,8 @@ export default function Projects() {
             },
         ],
     };
+
     if (loading) {
-        // Display loading screen or spinner
         return (
             <div className="relative flex items-center justify-center min-h-screen bg-gray-900">
                 <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-primary" role="status">
@@ -50,6 +51,7 @@ export default function Projects() {
             </div>
         );
     }
+
     return (
         <section
             data-aos="fade-up"
@@ -70,28 +72,28 @@ export default function Projects() {
                                 onMouseEnter={() => setHoveredProject(index)}
                                 onMouseLeave={() => setHoveredProject(null)}
                             >
-                                <div className="h-full border-2 border-orange-400 shadow-[0_0_15px_rgba(255,165,0,0.7)] border-opacity-60 rounded-lg overflow-hidden relative">
+                                <div className="h-full flex flex-col border-2 border-orange-400 shadow-lg rounded-lg overflow-hidden">
                                     {hoveredProject === index && project.projects.live_demo ? (
                                         <video
                                             src={project.projects.live_demo}
                                             autoPlay
                                             loop
                                             muted
-                                            className="w-full h-auto lg:h-48 md:h-36 sm:h-24 object-cover object-center"
+                                            className="w-full h-56 object-cover"
                                         />
                                     ) : (
                                         <img
                                             src={project.projects.images?.[0] || '/default-image.jpg'}
                                             alt={project.projects.title}
-                                            className="w-full h-auto lg:h-48 md:h-36 sm:h-24 object-cover object-center"
+                                            className="w-full h-56 object-cover"
                                         />
                                     )}
-                                    <div className="p-6">
-                                        <h2 className="tracking-widest text-xl title-font font-medium text-gray-400 mb-1">
+                                    <div className="flex-1 p-6 flex flex-col">
+                                        <h2 className="text-lg font-semibold text-orange-400 mb-2">
                                             {project.projects.title}
                                         </h2>
-                                        <p className="leading-relaxed mb-3">{project.projects.description}</p>
-                                        <div className="mb-3">
+                                        <p className="text-gray-300 flex-grow">{project.projects.description}</p>
+                                        <div className="mt-4">
                                             <h3 className="text-orange-400 font-semibold">Technologies:</h3>
                                             <ul className="list-disc list-inside text-gray-300">
                                                 {project.projects.technologies.map((tech, i) => (
@@ -99,7 +101,7 @@ export default function Projects() {
                                                 ))}
                                             </ul>
                                         </div>
-                                        <div className="flex justify-between items-center">
+                                        <div className="mt-4 flex justify-between items-center">
                                             <a
                                                 href={project.projects.github_link}
                                                 target="_blank"
@@ -108,7 +110,8 @@ export default function Projects() {
                                             >
                                                 GitHub
                                             </a>
-                                            {project.projects.live_demo && (
+                                            {/* Uncomment below for live demo link */}
+                                            {/* {project.projects.live_demo && (
                                                 <a
                                                     href={project.projects.live_demo}
                                                     target="_blank"
@@ -117,7 +120,7 @@ export default function Projects() {
                                                 >
                                                     Live Demo
                                                 </a>
-                                            )}
+                                            )} */}
                                         </div>
                                     </div>
                                 </div>

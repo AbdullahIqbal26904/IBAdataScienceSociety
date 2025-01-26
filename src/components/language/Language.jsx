@@ -2,13 +2,12 @@ import React from 'react'
 
 export default function Language() {
     const languages = [
-        { code: 'En', name: 'English', level: 'Maternal' },
+        { code: 'En', name: 'English', level: 'Common' },
         { code: 'Ar', name: 'Arabic', level: 'Common' },
-        { code: 'Sp', name: 'Spanish', level: 'Average' },
-        { code: 'Fr', name: 'French', level: 'Good' },
+        { code: 'Ur', name: 'Urdu', level: 'Maternal' },
     ];
     return (
-        <section data-aos='fade-up' data-aos-delay='400' className='flex flex-col items-center justify-center gap-5 md:gap-5 mt-20'>
+        <section id='language' data-aos='fade-up' data-aos-delay='400' className='flex flex-col items-center justify-center gap-5 md:gap-5 mt-20'>
             <h1
                 data-aos="fade-right"
                 data-aos-delay="500"

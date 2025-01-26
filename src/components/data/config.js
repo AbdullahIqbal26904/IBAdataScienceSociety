@@ -57,16 +57,19 @@ export const socialIcons = [
 export const experience = [
   {
     id: 1,
-    title: 'Frontend Developer',
-    company: "Tech Solutions Inc.",
-    year: '2022-Present',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, rem!',
+    title: 'Host Team',
+    company: "Computer Science Society IBA",
+    year: '2023-2024',
+    description: 'Actively contributed to organizing and managing events, ensuring seamless execution of activities, and engaging with participants to create a dynamic and welcoming environment.',
     icon: 'https://img.icons8.com/ios-filled/64/ffffff/briefcase-settings.png'
   },
+
   {
     id: 2,
-    title: 'Frontend Developer',
-    company: "StartUp", year: '2022-Present',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, rem!',
+    title: 'Module Head - Database Module',
+    company: "Computer Science Society IBA",
+    year: '2024-2025',
+    description: 'Led the Database Module by organizing workshops, mentoring students, and overseeing project development. Focused on enhancing participants’ understanding of database concepts, SQL, and real-world application design.',
     icon: 'https://img.icons8.com/ios-filled/64/ffffff/briefcase-settings.png'
-  }]
+},
+]
