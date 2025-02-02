@@ -5,46 +5,23 @@ import img from '../../assets/myimg.jpg';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import { setUser } from '../../redux/features/portfolioSlice';
+import { setUser,setshowloader } from '../../redux/features/portfolioSlice';
 import Typical from 'react-typical';
 import { variants } from '../data/config';
 import SocialButtons from '../buttons/SocialButtons';
 function HeroSection() {
-    const { user } = useSelector((state) => state.allCart);
+    const { user,userBio } = useSelector((state) => state.allCart);
     const [data, setData] = useState(true);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true); // Add loading state
-    const [userBio, setuserBio] = useState([]);
-    useEffect(() => {
-        if (data) {
-            axios.get('https://portfoliobackend-cpj1.onrender.com/users/')
-                .then(res => {
-                    setData(false);
-                    dispatch(setUser(res.data[0]));
-                    setuserBio(splitSentences(res.data[0].bio));
-                    setLoading(false); 
-                    // console.log(splitSentences(res.data[0].bio));   
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        }
-    }, [data]);
+    // const [userBio, setuserBio] = useState([]);
+    
     function splitSentences(bio) {
         const sentences = bio.split(/(?<=\.|\!|\?)\s+/);
         // Add a delay of 1000ms after each sentence
         return sentences.flatMap(sentence => [sentence, 1000]);
     }
-    if (loading) {
-        // Display loading screen or spinner
-        return (
-            <div className="relative flex items-center justify-center min-h-screen bg-gray-900">
-                <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-primary" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            </div>
-        );
-    }
+    
     return (
         <section id='' className="relative">
             {/* Gradient Headers */}
