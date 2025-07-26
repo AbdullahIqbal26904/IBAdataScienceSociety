@@ -87,15 +87,19 @@ function HeroSection() {
                                 className="text-xl md:text-2xl lg:text-3xl font-medium text-white/80 min-h-[6rem]"
                                 variants={itemVariants}
                             >
-                                <Typewriter
-                                    words={userBio}
-                                    loop={Infinity}
-                                    cursor
-                                    cursorStyle='|'
-                                    typeSpeed={70}
-                                    deleteSpeed={50}
-                                    delaySpeed={1000}
-                                />
+                                {userBio && userBio.length > 0 ? (
+                                  <Typewriter
+                                      words={userBio}
+                                      loop={0} // Set to 0 instead of Infinity to avoid potential memory leaks
+                                      cursor
+                                      cursorStyle='|'
+                                      typeSpeed={70}
+                                      deleteSpeed={50}
+                                      delaySpeed={1000}
+                                  />
+                                ) : (
+                                  <span>Welcome to my portfolio</span>
+                                )}
                             </motion.div>
                             
                             <motion.div 

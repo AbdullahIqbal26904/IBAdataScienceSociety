@@ -68,7 +68,7 @@ export default function Contact() {
         
         <div className="max-w-4xl mx-auto">
           <motion.div 
-            className="grid md:grid-cols-3 gap-10"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -130,7 +130,7 @@ export default function Contact() {
             
             {/* Contact Form */}
             <motion.div 
-              className="md:col-span-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8"
+              className="md:col-span-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -153,7 +153,7 @@ export default function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-200 mb-2">Name</label>
                       <motion.div variants={inputVariants} whileFocus="focus">

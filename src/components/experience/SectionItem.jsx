@@ -11,13 +11,13 @@ function SectionItem({ title, subtitle, year, details, icon }) {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            viewport={{ once: false }}
+            viewport={{ once: true }}
         >
             <section
                 className=" bg-black z-20 text-white rounded-xl">
-                < section className="border border-primary bg-[#ffffff29] rounded-xl p-3 flex items-center">
-                    <img src={icon} alt="icon" width={64} height={64} />
-                    <div className="ml-10">
+                < section className="border border-primary bg-[#ffffff29] rounded-xl p-3 flex flex-col sm:flex-row items-center">
+                    <img src={icon} alt="icon" className="w-16 h-16 sm:w-16 sm:h-16 mb-4 sm:mb-0" />
+                    <div className="ml-0 sm:ml-10 text-center sm:text-left">
                         <h3 className="text-xl font-semibold">{title}</h3>
                         <p className="text-sm">{subtitle}</p>
                         <p className="text-sm italic">{year}</p>

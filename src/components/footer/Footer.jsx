@@ -21,9 +21,9 @@ export default function Footer() {
     ];
     
     return (
-        <footer className="relative bg-black bg-opacity-50 backdrop-blur-md pt-16 border-t border-white/10">
+        <footer className="relative bg-black bg-opacity-50 backdrop-blur-md pt-16 border-t border-white/10 min-h-[80vh] flex flex-col justify-center">
             <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10">
                     {/* Brand & Description */}
                     <div className="col-span-1 md:col-span-2">
                         <motion.h2 

@@ -5,6 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'xs': '375px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       animation: {
         zoomRotate: 'zoomRotate 1.5s ease-in-out infinite',
@@ -16,6 +24,7 @@ export default {
         "slide-up": "slideUp 0.5s ease-out forwards",
         "slide-down": "slideDown 0.5s ease-out forwards",
         "fade-in": "fadeIn 0.5s ease-out forwards",
+        "fade-in-mobile": "fadeIn 0.3s ease-out forwards",
       },
       keyframes: {
         zoomRotate: {

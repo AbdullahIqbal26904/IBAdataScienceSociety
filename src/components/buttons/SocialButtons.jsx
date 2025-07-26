@@ -43,7 +43,7 @@ export default function SocialButtons({ display = "vertical" }) {
     
     return (
         <motion.div 
-            className={`flex ${isVertical ? 'flex-col space-y-6' : 'flex-row space-x-6'} items-center justify-center`}
+            className={`flex ${isVertical ? 'flex-col space-y-4 md:space-y-6' : 'flex-row space-x-3 sm:space-x-4 md:space-x-6'} items-center justify-center`}
             variants={containerVariants}
             initial="hidden"
             animate="show"
@@ -57,8 +57,8 @@ export default function SocialButtons({ display = "vertical" }) {
                     aria-label={icon.name}
                     className={`flex items-center justify-center ${
                         isVertical 
-                            ? 'w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20' 
-                            : 'w-10 h-10'
+                            ? 'w-10 h-10 sm:w-12 sm:h-12 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20' 
+                            : 'w-9 h-9 sm:w-10 sm:h-10'
                     } transition-colors duration-300`}
                     custom={index}
                     variants={variants}
@@ -67,8 +67,8 @@ export default function SocialButtons({ display = "vertical" }) {
                 >
                     <svg 
                         viewBox={icon.viewBox} 
-                        width={isVertical ? 20 : 24} 
-                        height={isVertical ? 20 : 24}
+                        width={isVertical ? 18 : 20} 
+                        height={isVertical ? 18 : 20}
                         className="text-primary"
                     >
                         <path

@@ -34,11 +34,37 @@ export default function Projects() {
         arrows: true,
         responsive: [
             {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    dots: true
+                }
+            },
+            {
                 breakpoint: 780,
                 settings: {
                     slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
                 },
             },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                    centerMode: true,
+                    centerPadding: '15px',
+                }
+            }
         ],
     };
 
@@ -67,7 +93,7 @@ export default function Projects() {
                     <Slider {...settings}>
                         {fprojects.map((project, index) => (
                             <div
-                                key={project._id}
+                                key={index}
                                 className="p-4"
                                 onMouseEnter={() => setHoveredProject(index)}
                                 onMouseLeave={() => setHoveredProject(null)}
