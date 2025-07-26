@@ -35,66 +35,99 @@ const [loading, setLoading] = useState(true); // Add loading state
     );
 }
   return (
-    <section id="education" className="relative mt-40">
-      <CustomTitle
-        text="My Education"
-        gradient="linear-gradient(to right, #eee, #eee)"
-        size="3rem"
-      />
-      <section className="relative grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 p-16 mt-12">
-        <header className="absolute w-1/2 aspect-[16/5] -skew-x-12 rounded-full bg-gradient-to-r from-[#007cda] 
-                via-[#785ae4] to-primary opacity-20 blur-[100px] left-10 top-0 hidden md:block">
-        </header>
-        <header className="absolute w-1/2 aspect-[16/5] -skew-x-12 rounded-full bg-gradient-to-r from-[#007cda]
-                     via-[#785ae4] to-primary opacity-20 blur-[100px] right-10 bottom-0 hidden md:block">
-        </header>
+    <section id="education" className="relative py-24">
+      {/* Gradient background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.15 }}
+          transition={{ duration: 1.5 }}
+          className="absolute w-3/4 aspect-square rounded-full bg-gradient-to-br from-primary to-[#ff6667] blur-[120px] -right-1/3 -top-1/2"
+        />
+      </div>
 
-        {education && education.map((educ, index) => (
-          <motion.article
-            key={index}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.5, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.5 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="relative w-full h-[430px] p-5 grid place-items-center overflow-hidden rounded-[20px] shadow-lg"
-          >
+      <div className="container mx-auto px-4 z-10 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300 mb-4">
+            My Education
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto"></div>
+        </motion.div>
 
-            <section className="absolute w-[95%] h-[95%] bg-[#0d182e] rounded-[20px] z-10 text-center text-white p-5 flex flex-col items-center justify-between">
-              {/* Institution Header */}
-              <header className="w-full border border-primary bg-[#ffffff29] rounded-xl p-3 mb-4">
-                <h2 className="uppercase text-lg md:text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#FFC107] to-[#ff6667]">
-                  {educ.institution}
-                </h2>
-              </header>
-
-              {/* Institute Logo */}
-              <img
-                src={educ.instituteimage}
-                alt={`${educ.institution} logo`}
-                className="w-20 h-20 rounded-full border-2 border-primary shadow-md mb-4"
-              />
-
-              {/* Degree Details */}
-              <p className="text-sm md:text-base mb-2">
-                <strong>Degree:</strong> {educ.degree}
-              </p>
-
-              {/* Additional Details */}
-              <p className="text-sm md:text-base mb-2">
-                <strong>Details:</strong> {educ.details}
-              </p>
-
-              {/* Years */}
-              <p className="text-sm md:text-base mb-2">
-                <strong>Years:</strong> {educ.year_of_start} - {educ.year_of_passing}
-              </p>
-            </section>
-            <section className="absolute w-full h-[105%] bg-gradient-to-r from-[#FFC107] to-[#ff6667] animate-spin-slow "></section>
-          </motion.article>
-        ))}
-      </section>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {education && education.map((educ, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+              className="relative group"
+            >
+              <motion.div 
+                whileHover={{ scale: 1.03, rotateY: 5 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative bg-gradient-to-br from-[#11182b] to-[#0d182e] rounded-2xl overflow-hidden h-full"
+              >
+                {/* Animated gradient border */}
+                <div className="absolute inset-0 p-0.5">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary animate-spin-slow rounded-2xl"></div>
+                </div>
+                
+                <div className="relative backdrop-blur-sm p-6 h-full z-10">
+                  <div className="flex flex-col h-full">
+                    {/* Top section with institution name */}
+                    <div className="mb-6 flex items-center">
+                      <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary mr-4 flex-shrink-0">
+                        <img
+                          src={educ.instituteimage}
+                          alt={`${educ.institution} logo`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-lg md:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary uppercase">
+                          {educ.institution}
+                        </h3>
+                        <p className="text-gray-300 text-sm">
+                          {educ.year_of_start} - {educ.year_of_passing}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* Degree info */}
+                    <div className="bg-white/5 rounded-xl p-4 mb-4">
+                      <h4 className="text-white font-medium mb-1">Degree</h4>
+                      <p className="text-gray-300">{educ.degree}</p>
+                    </div>
+                    
+                    {/* Details */}
+                    <div className="bg-white/5 rounded-xl p-4 flex-grow">
+                      <h4 className="text-white font-medium mb-1">Details</h4>
+                      <p className="text-gray-300 text-sm">{educ.details}</p>
+                    </div>
+                    
+                    {/* Decorative elements */}
+                    <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl opacity-70"></div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 }

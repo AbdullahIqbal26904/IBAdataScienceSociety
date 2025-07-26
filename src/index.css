@@ -2,6 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #FFC107;
+  --secondary: #ff18b8;
+}
+
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  @apply bg-black text-white;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-primary to-secondary rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gradient-to-b from-secondary to-primary;
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-primary/30 text-white;
+}
+
+/* Glass card styling */
+.glass-card {
+  @apply bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-lg;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
+}
+
+/* Animated underline for links */
+.animated-underline {
+  @apply relative inline-block;
+}
+
+.animated-underline::after {
+  content: '';
+  @apply absolute left-0 -bottom-1 h-0.5 w-0 bg-primary transition-all duration-300;
+}
+
+.animated-underline:hover::after {
+  @apply w-full;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Custom snap scrolling */
+.snap-mandatory > div {
+  scroll-snap-align: start;
+}
+
+/* Prevent FOUC (Flash Of Unstyled Content) */
+.no-fouc {
+  @apply opacity-0;
+}
+
+.fouc-ready {
+  @apply opacity-100 transition-opacity duration-500;
 }

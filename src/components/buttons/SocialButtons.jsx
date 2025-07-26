@@ -2,59 +2,82 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { socialIcons } from '../data/config';
 
-export default function SocialButtons() {
-    const animationduration = 4;
-
+export default function SocialButtons({ display = "vertical" }) {
     const variants = {
-        initial: { pathLength: 0, strokeOpacity: 1, fillOpacity: 0 },
-        animate: {
-            pathLength: 1,
-            strokeOpacity: 0,
-            fillOpacity: 1,
+        initial: { scale: 0, opacity: 0 },
+        animate: (i) => ({
+            scale: 1,
+            opacity: 1,
             transition: {
-                duration: animationduration,
-                ease: 'easeInOut',
-                strokeOpacity: {
-                    delay: animationduration,
-                },
-                fillOpacity: {
-                    delay: animationduration,
-                },
-            },
-        },
-        hover: {
-            scale: 1.1,
-            transition: {
+                delay: i * 0.1,
                 duration: 0.3,
-                yoyo: Infinity,
+                ease: "easeOut"
+            }
+        }),
+        hover: {
+            scale: 1.2,
+            transition: {
+                duration: 0.2,
+                ease: "easeInOut",
             },
         },
+        tap: {
+            scale: 0.9
+        }
     };
 
+    // Parent container variants for staggered children animation
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2
+            }
+        }
+    };
+
+    // Styling changes based on display mode
+    const isVertical = display === "vertical";
+    
     return (
-        <div className="md:flex flex-col items-center justify-center border border-primary bg-[#ffffff29] rounded-3xl space-y-11 p-3 max-h-[506px] md:max-h-[386px] hidden">
-            {socialIcons.map((icon) => (
-                <a
+        <motion.div 
+            className={`flex ${isVertical ? 'flex-col space-y-6' : 'flex-row space-x-6'} items-center justify-center`}
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+        >
+            {socialIcons.map((icon, index) => (
+                <motion.a
                     key={icon.id}
                     href={icon.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={icon.name}
+                    className={`flex items-center justify-center ${
+                        isVertical 
+                            ? 'w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20' 
+                            : 'w-10 h-10'
+                    } transition-colors duration-300`}
+                    custom={index}
+                    variants={variants}
+                    whileHover="hover"
+                    whileTap="tap"
                 >
-                    <svg viewBox={icon.viewBox} width={40} height={40}>
-                        <motion.path
+                    <svg 
+                        viewBox={icon.viewBox} 
+                        width={isVertical ? 20 : 24} 
+                        height={isVertical ? 20 : 24}
+                        className="text-primary"
+                    >
+                        <path
                             d={icon.path}
-                            fill="#FFC107"
-                            stroke="#FFC107"
-                            strokeWidth={1}
-                            variants={variants}
-                            initial="initial"
-                            animate="animate"
-                            whileHover="hover"
+                            fill="currentColor"
                         />
                     </svg>
-                </a>
+                </motion.a>
             ))}
-        </div>
+        </motion.div>
     );
 }
