@@ -204,7 +204,7 @@ export default function App() {
         <div className="max-w-screen-2xl mx-auto relative z-10">
           <Navbar />
           <div className="snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden">
-            <div className="snap-start min-h-screen w-full flex items-center">
+            <div id="hero" className="snap-start min-h-screen w-full flex items-center">
               <HeroSection />
             </div>
             
@@ -214,29 +214,29 @@ export default function App() {
               </div>
             </div>
             
-            <div className="snap-start min-h-screen w-full flex items-center justify-center">
+            <div id="skills" className="snap-start min-h-screen w-full flex items-center justify-center">
               <div className="w-full">
                 <Skills />
               </div>
             </div>
             
-            <div className="snap-start min-h-screen w-full">
+            <div id="education" className="snap-start min-h-screen w-full">
               <Education />
             </div>
             
-            <div className="snap-start min-h-screen w-full">
+            <div id="experience" className="snap-start min-h-screen w-full">
               <Experience />
             </div>
             
-            <div className="snap-start min-h-screen w-full">
+            <div id="projects" className="snap-start min-h-screen w-full">
               <Projects />
             </div>
             
-            <div className="snap-start min-h-screen w-full">
+            <div id="language" className="snap-start min-h-screen w-full">
               <Language />
             </div>
             
-            <div className="snap-start min-h-screen w-full">
+            <div id="contact" className="snap-start min-h-screen w-full">
               <Contact />
             </div>
             

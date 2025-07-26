@@ -82,7 +82,6 @@ export default function Projects() {
         <section
             data-aos="fade-up"
             data-aos-delay="400"
-            id="projects"
             className="relative overflow-hidden flex flex-col text-white body-font"
         >
             <h2 className="sm:text-5xl text-3xl font-bold title-font text-gradient text-orange-500 bg-clip-text text-center mb-12">

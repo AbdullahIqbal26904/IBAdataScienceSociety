@@ -11,17 +11,22 @@ export default function Navbar() {
             setScrolled(scrollPosition > 50);
             
             // Determine which section is in view
-            const sections = ['', 'skills', 'education', 'experience', 'language', 'projects', 'contact'];
+            const sections = ['hero', 'skills', 'education', 'experience', 'language', 'projects', 'contact'];
+            let currentActive = '';
+            
             for (const section of sections) {
-                const element = document.getElementById(section || 'hero');
+                const element = document.getElementById(section);
                 if (element) {
                     const rect = element.getBoundingClientRect();
-                    if (rect.top <= 100 && rect.bottom >= 100) {
-                        setActiveSection(section || '');
+                    // If the section is in the viewport (with some margin)
+                    if (rect.top <= 200 && rect.bottom >= 100) {
+                        currentActive = section === 'hero' ? '' : section;
                         break;
                     }
                 }
             }
+            
+            setActiveSection(currentActive);
         };
         
         window.addEventListener('scroll', handleScroll);
@@ -29,7 +34,7 @@ export default function Navbar() {
     }, []);
     
     const listNavbar = [
-        { name: 'Home', link: '' },
+        { name: 'Home', link: '#hero' },
         { name: 'Skills', link: '#skills' },
         { name: 'Education', link: '#education' },
         { name: 'Experience', link: '#experience' },
@@ -62,13 +67,13 @@ export default function Navbar() {
                             key={index}
                             href={item.link}
                             className={`relative mx-3 py-2 px-3 text-sm font-medium transition-all duration-300 ${
-                                activeSection === (item.link.replace('#', '') || '') 
+                                activeSection === (item.link.replace('#', '')) 
                                 ? 'text-primary' 
-                                : 'text-white hover:text-yellow-300'
+                                : 'text-white hover:text-primary/80'
                             }`}
                         >
                             {item.name}
-                            {activeSection === (item.link.replace('#', '') || '') && (
+                            {activeSection === (item.link.replace('#', '')) && (
                                 <motion.span 
                                     layoutId="navIndicator"
                                     className="absolute bottom-0 left-0 h-0.5 w-full bg-primary" 

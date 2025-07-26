@@ -7,7 +7,7 @@ export default function Language() {
         { code: 'Ur', name: 'Urdu', level: 'Maternal' },
     ];
     return (
-        <section id='language' data-aos='fade-up' data-aos-delay='400' className='flex flex-col items-center justify-center gap-5 md:gap-5 mt-20'>
+        <section id="language" data-aos='fade-up' data-aos-delay='400' className='flex flex-col items-center justify-center gap-5 md:gap-5 mt-20'>
             <h1
                 data-aos="fade-right"
                 data-aos-delay="500"

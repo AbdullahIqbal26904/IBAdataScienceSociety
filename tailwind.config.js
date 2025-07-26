@@ -67,8 +67,8 @@ export default {
         },
       },
       colors: {
-        primary: '#FFC107',
-        secondary: '#ff18b8',
+        primary: '#3498db',
+        secondary: '#2c3e50',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
