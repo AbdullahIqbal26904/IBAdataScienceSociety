@@ -39,10 +39,14 @@ export default function App() {
     let frameCount = 0;
     let lowFrameRateCount = 0;
     
-    // Set the 3D background to false by default on mobile devices
+    // Only disable 3D background on very low-end mobile devices
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      console.log('Mobile device detected, disabling 3D background');
-      setUse3DBackground(false);
+      // Check for older devices with less memory
+      const deviceMemory = navigator.deviceMemory;
+      if (deviceMemory && deviceMemory < 2) { // Less than 2GB RAM
+        console.log('Low memory device detected, disabling 3D background');
+        setUse3DBackground(false);
+      }
     }
     
     const checkPerformance = () => {
@@ -57,11 +61,13 @@ export default function App() {
         frameCount = 0;
         lastTime = now;
         
-        // If FPS is consistently low, disable 3D background
-        if (fps < 30) {
+        // Only disable if FPS is extremely low for a longer period
+        // This prevents Vercel deployments from disabling the background after a few seconds
+        if (fps < 15) { // Lower threshold (was 30)
           lowFrameRateCount++;
-          if (lowFrameRateCount >= 3) {
-            console.warn('Performance issues detected, disabling 3D background');
+          // Require more low FPS readings before disabling (was 3)
+          if (lowFrameRateCount >= 5) {
+            console.warn('Severe performance issues detected, disabling 3D background');
             setUse3DBackground(false);
           }
         } else {
@@ -69,12 +75,12 @@ export default function App() {
           lowFrameRateCount = Math.max(0, lowFrameRateCount - 1);
         }
         
-        // Also check memory usage if available
+        // Only check memory if we have extreme issues
         if (window.performance && window.performance.memory) {
           try {
             const memoryInfo = window.performance.memory;
-            if (memoryInfo.usedJSHeapSize > memoryInfo.jsHeapSizeLimit * 0.7) {
-              console.warn('High memory usage detected, disabling 3D background');
+            if (memoryInfo.usedJSHeapSize > memoryInfo.jsHeapSizeLimit * 0.9) { // Higher threshold (was 0.7)
+              console.warn('Critical memory usage detected, disabling 3D background');
               setUse3DBackground(false);
             }
           } catch (e) {
@@ -89,13 +95,19 @@ export default function App() {
       }
     };
     
-    // Start monitoring
-    const animFrameId = window.requestAnimationFrame(checkPerformance);
+    // Start monitoring after a delay to let the page stabilize
+    // This prevents premature disabling on initial load
+    const timeoutId = setTimeout(() => {
+      const animFrameId = window.requestAnimationFrame(checkPerformance);
+      return () => {
+        if (animFrameId) {
+          window.cancelAnimationFrame(animFrameId);
+        }
+      };
+    }, 3000); // 3 second delay
     
     return () => {
-      if (animFrameId) {
-        window.cancelAnimationFrame(animFrameId);
-      }
+      clearTimeout(timeoutId);
     };
   }, []);
   
@@ -106,24 +118,68 @@ export default function App() {
       dispatch(setshowloader(false));
     }, 1500); // Short artificial delay for loading effect
     
-    // Add a global error handler
+    // Add a global error handler with better error filtering
     const handleError = (event) => {
+      // Log the error for debugging
       console.error('Global error:', event.error);
-      setHasError(true);
-      // If error is related to WebGL, disable 3D background
+      
+      // Check if this is a critical error that should disable the app
+      const errorString = event.error ? event.error.toString() : '';
+      const isCriticalError = 
+        errorString.includes('Out of memory') ||
+        errorString.includes('Cannot read properties of undefined') ||
+        errorString.includes('Maximum call stack size exceeded');
+      
+      // Only set hasError for truly critical errors
+      if (isCriticalError) {
+        setHasError(true);
+      }
+      
+      // Only disable 3D background for specific WebGL-related critical errors
+      // Ignore minor WebGL warnings that shouldn't affect functionality
       if (event.error && (
-          event.error.toString().includes('WebGL') || 
-          event.error.toString().includes('canvas') ||
-          event.error.toString().includes('GPU')
+          errorString.includes('WebGL context lost') || 
+          errorString.includes('Unable to initialize WebGL') ||
+          errorString.includes('GPU process crashed') ||
+          errorString.includes('Out of memory')
         )) {
+        console.warn('Critical WebGL error detected, disabling 3D background');
         setUse3DBackground(false);
       }
     };
     
     window.addEventListener('error', handleError);
     
+    // Add a specific handler for WebGL context lost events
+    const handleContextLost = (event) => {
+      console.warn('WebGL context lost event detected');
+      // Prevent the default behavior which would prevent context restoration
+      event.preventDefault();
+    };
+    
+    // Add a specific handler for WebGL context restored events
+    const handleContextRestored = () => {
+      console.log('WebGL context restored');
+    };
+    
+    // Add these handlers to the canvas element if it exists
+    setTimeout(() => {
+      const canvasElements = document.querySelectorAll('canvas');
+      canvasElements.forEach(canvas => {
+        canvas.addEventListener('webglcontextlost', handleContextLost);
+        canvas.addEventListener('webglcontextrestored', handleContextRestored);
+      });
+    }, 2000);
+    
     return () => {
       window.removeEventListener('error', handleError);
+      
+      // Clean up WebGL context event listeners
+      const canvasElements = document.querySelectorAll('canvas');
+      canvasElements.forEach(canvas => {
+        canvas.removeEventListener('webglcontextlost', handleContextLost);
+        canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+      });
     };
   }, [dispatch]);
   if (showloader) {
