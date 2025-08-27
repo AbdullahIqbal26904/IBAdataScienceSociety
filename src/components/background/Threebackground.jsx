@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-function Threebackground() {
+function Threebackground({ fallbackToStatic }) {
     const mountRef = useRef(null); // To attach the 3D scene to a DOM element
     const [isVisible, setIsVisible] = useState(true);
     const sceneRef = useRef(null);
@@ -94,13 +94,21 @@ function Threebackground() {
             
             // Ensure we have valid refs before rendering
             if (starsRef.current && rendererRef.current && sceneRef.current) {
-                // Even slower rotation for better stability
-                starsRef.current.rotation.y += isMobile ? 0.0002 : 0.0004;
-                starsRef.current.rotation.x += isMobile ? 0.0001 : 0.0002;
-                
-                // Force renderer to maintain context with camera and scene
-                rendererRef.current.render(sceneRef.current, camera);
-                lastRenderTime = currentTime - (deltaTime % frameInterval);
+                try {
+                    // Even slower rotation for better stability
+                    starsRef.current.rotation.y += isMobile ? 0.0002 : 0.0004;
+                    starsRef.current.rotation.x += isMobile ? 0.0001 : 0.0002;
+                    
+                    // Force renderer to maintain context with camera and scene
+                    rendererRef.current.render(sceneRef.current, camera);
+                    lastRenderTime = currentTime - (deltaTime % frameInterval);
+                } catch (error) {
+                    console.error('Error in animation loop:', error);
+                    if (fallbackToStatic) {
+                        fallbackToStatic();
+                        cancelAnimationFrame(animationFrameIdRef.current);
+                    }
+                }
             }
         };
         
@@ -140,12 +148,22 @@ function Threebackground() {
 
         // Force first render to prevent initial blank state
         if (rendererRef.current && sceneRef.current) {
-            rendererRef.current.render(sceneRef.current, camera);
+            try {
+                rendererRef.current.render(sceneRef.current, camera);
+            } catch (error) {
+                console.error('Error during initial render:', error);
+                if (fallbackToStatic) fallbackToStatic();
+            }
         }
         
         // Start animation loop after a short delay to ensure proper initialization
         setTimeout(() => {
-            animate(0);
+            try {
+                animate(0);
+            } catch (error) {
+                console.error('Error starting animation loop:', error);
+                if (fallbackToStatic) fallbackToStatic();
+            }
         }, 100);
         
         // Step 5: Cleanup when the component unmounts
