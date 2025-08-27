@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import img from '../../assets/myimg.jpg';
+import React from 'react';
+import img from '../../assets/image4.png'; // Using placeholder image for society logo
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
 import SocialButtons from '../buttons/SocialButtons';
 
 function HeroSection() {
-    const { user, userBio } = useSelector((state) => state.allCart);
+    const { society } = useSelector((state) => state.allCart);
     
     // Animation variants for staggered animations
     const containerVariants = {
@@ -40,6 +40,15 @@ function HeroSection() {
             }
         }
     };
+
+    // Data science related phrases for typewriter effect
+    const phrases = [
+        "Empowering students with data-driven thinking at IBA.",
+        "Where data science enthusiasts collaborate and innovate.",
+        "Learn, analyze, visualize, transform.",
+        "Turning data into insights, insights into action.",
+        "Join us to explore the world of data science."
+    ];
     
     return (
         <section id="hero" className="relative min-h-screen flex items-center py-16 md:py-0">
@@ -70,16 +79,16 @@ function HeroSection() {
                         <div className="space-y-6">
                             <motion.div variants={itemVariants}>
                                 <span className="inline-block py-1 px-3 text-xs md:text-sm rounded-full bg-white/10 backdrop-blur-sm text-primary mb-4">
-                                    Welcome to my portfolio
+                                    Welcome to
                                 </span>
                             </motion.div>
                             
                             <motion.h1 
-                                className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-white"
+                                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white"
                                 variants={itemVariants}
                             >
-                                Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                                    {user.name}
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                                    {society.name}
                                 </span>
                             </motion.h1>
                             
@@ -87,19 +96,15 @@ function HeroSection() {
                                 className="text-xl md:text-2xl lg:text-3xl font-medium text-white/80 min-h-[6rem]"
                                 variants={itemVariants}
                             >
-                                {userBio && userBio.length > 0 ? (
-                                  <Typewriter
-                                      words={userBio}
-                                      loop={0} // Set to 0 instead of Infinity to avoid potential memory leaks
-                                      cursor
-                                      cursorStyle='|'
-                                      typeSpeed={70}
-                                      deleteSpeed={50}
-                                      delaySpeed={1000}
-                                  />
-                                ) : (
-                                  <span>Welcome to my portfolio</span>
-                                )}
+                                <Typewriter
+                                    words={phrases}
+                                    loop={0}
+                                    cursor
+                                    cursorStyle='|'
+                                    typeSpeed={70}
+                                    deleteSpeed={50}
+                                    delaySpeed={1000}
+                                />
                             </motion.div>
                             
                             <motion.div 
@@ -111,7 +116,7 @@ function HeroSection() {
                                     whileTap={{ scale: 0.95 }}
                                     className="py-3 px-8 bg-gradient-to-r from-primary to-secondary rounded-full text-black font-medium shadow-lg shadow-yellow-600/20 hover:shadow-yellow-600/40 transition-all duration-300"
                                 >
-                                    Hire Me
+                                    <a href="#events">Explore Events</a>
                                 </motion.button>
                                 
                                 <motion.button
@@ -119,12 +124,12 @@ function HeroSection() {
                                     whileTap={{ scale: 0.95 }}
                                     className="py-3 px-8 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-medium hover:bg-white/20 transition-all duration-300"
                                 >
-                                    <div className="flex items-center gap-2">
-                                        <svg viewBox="0 0 24 24" width={20} height={20} fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12 15.586l4.95-4.95-1.414-1.414L13 12.172V4h-2v8.172L8.464 9.636 7.05 11.05 12 15.586zm-7 2h14v2H5v-2z" fill="currentColor"/>
+                                    <a href="#dataverse" className="flex items-center gap-2">
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                                         </svg>
-                                        <span>Download Resume</span>
-                                    </div>
+                                        <span>DataVerse 2026</span>
+                                    </a>
                                 </motion.button>
                             </motion.div>
                             
@@ -138,7 +143,7 @@ function HeroSection() {
                         </div>
                     </motion.div>
                     
-                    {/* Right Column - Profile Image */}
+                    {/* Right Column - Logo Image */}
                     <motion.div 
                         className="w-full lg:w-1/2 flex justify-center lg:justify-end"
                         variants={itemVariants}
@@ -164,14 +169,14 @@ function HeroSection() {
                                 whileHover={{ scale: 1.03 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                {/* Profile image */}
+                                {/* Logo image */}
                                 <img
                                     src={img}
-                                    alt={`${user.name}'s Profile`}
+                                    alt="IBA Data Science Society Logo"
                                     className="w-full h-full object-cover rounded-full border-4 border-black"
                                 />
                                 
-                                {/* Decorative circles */}
+                                {/* Decorative elements */}
                                 <motion.div 
                                     className="absolute -top-6 -right-6 w-12 h-12 rounded-full bg-primary"
                                     animate={{ 
@@ -194,6 +199,27 @@ function HeroSection() {
                                         ease: "easeInOut" 
                                     }}
                                 />
+                                
+                                {/* Data visualization elements */}
+                                <motion.div
+                                    className="absolute -bottom-12 -right-12 w-20 h-20 bg-gray-900/80 backdrop-blur-md rounded-lg flex items-center justify-center"
+                                    animate={{ rotate: [0, 10, 0] }}
+                                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                >
+                                    <svg className="w-10 h-10 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                </motion.div>
+                                
+                                <motion.div
+                                    className="absolute -top-12 -left-12 w-16 h-16 bg-gray-900/80 backdrop-blur-md rounded-lg flex items-center justify-center"
+                                    animate={{ rotate: [0, -10, 0] }}
+                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                >
+                                    <svg className="w-8 h-8 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                                    </svg>
+                                </motion.div>
                             </motion.div>
                         </div>
                     </motion.div>

@@ -1,28 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import Skills from './components/skills/Skills';
-import Experience from './components/experience/Experience';
-import Language from './components/language/Language';
+import Events from './components/events/Events';
 import Projects from './components/projects/Projects';
 import { useDispatch, useSelector } from 'react-redux';
 import Contact from './components/contact/Contact';
 import Footer from './components/footer/Footer';
-import Admin from './components/admin/Admin';
 import Threebackground from './components/background/Threebackground';
 import HeroSection from './components/hero/HeroSection';
 import Navbar from './components/navbar/Navbar';
-import Numbers from './components/numbers/Numbers';
-import Education from './education/Education';
-import axios from 'axios';
-import { setUser, setshowloader, setUserBio } from './redux/features/portfolioSlice';
+import DataverseSection from './components/dataverse/DataverseSection';
+import AboutUs from './components/about/AboutUs';
+import Gallery from './components/gallery/Gallery';
+import { setshowloader, setInitialData } from './redux/features/portfolioSlice';
 export default function App() {
-  const { user, showloader } = useSelector((state) => state.allCart);
-  const [data, setData] = useState(true);
+  const { society, showloader } = useSelector((state) => state.allCart);
   const [hasError, setHasError] = useState(false);
   const [use3DBackground, setUse3DBackground] = useState(true);
-  const renderTimeoutRef = useRef(null);
-  // const [userBio, setuserBio] = useState([]);
   const dispatch = useDispatch();
   
   // Initialize AOS animations
@@ -104,42 +98,13 @@ export default function App() {
       }
     };
   }, []);
+  
   useEffect(() => {
-    if (data) {
-      // Add timeout to prevent infinite loading
-      const timeoutId = setTimeout(() => {
-        dispatch(setshowloader(false));
-        setData(false);
-      }, 15000); // 15 seconds timeout for API
-      
-      axios.get('https://portfoliobackend-cpj1.onrender.com/users/')
-        .then(res => {
-          clearTimeout(timeoutId);
-          setData(false);
-          if (res.data && res.data.length > 0 && res.data[0].bio) {
-            try {
-              // Safely process the user data
-              const userData = res.data[0];
-              const bioSentences = splitSentences(userData.bio || "Welcome to my portfolio");
-              
-              // Dispatch actions
-              dispatch(setUser(userData));
-              dispatch(setUserBio(bioSentences));
-            } catch (err) {
-              console.error('Error processing user data:', err);
-            }
-          } else {
-            console.error('Invalid data format received from API');
-          }
-          dispatch(setshowloader(false));
-        })
-        .catch(error => {
-          clearTimeout(timeoutId);
-          console.error('Error fetching user data:', error);
-          dispatch(setshowloader(false));
-          setData(false);
-        })
-    }
+    // Initialize with static data instead of API fetch
+    setTimeout(() => {
+      dispatch(setInitialData());
+      dispatch(setshowloader(false));
+    }, 1500); // Short artificial delay for loading effect
     
     // Add a global error handler
     const handleError = (event) => {
@@ -160,11 +125,7 @@ export default function App() {
     return () => {
       window.removeEventListener('error', handleError);
     };
-  }, [data, dispatch]);
-  function splitSentences(bio) {
-    // Just split the sentences and return them as an array of strings
-    return bio.split(/(?<=\.|\!|\?)\s+/);
-  }
+  }, [dispatch]);
   if (showloader) {
     // Display loading screen or spinner
     return (
@@ -187,7 +148,7 @@ export default function App() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
         <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
-        <p className="mb-4 text-center">We encountered an error loading the portfolio.</p>
+        <p className="mb-4 text-center">We encountered an error loading the website.</p>
         <button 
           onClick={() => window.location.reload()}
           className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 transition-colors"
@@ -208,32 +169,28 @@ export default function App() {
               <HeroSection />
             </div>
             
-            <div className="snap-start min-h-screen w-full flex items-center justify-center">
+            <div id="about" className="snap-start min-h-screen w-full flex items-center justify-center">
               <div className="w-full px-4">
-                <Numbers />
+                <AboutUs />
               </div>
             </div>
             
-            <div id="skills" className="snap-start min-h-screen w-full flex items-center justify-center">
+            <div id="events" className="snap-start min-h-screen w-full flex items-center justify-center">
               <div className="w-full">
-                <Skills />
+                <Events />
               </div>
             </div>
             
-            <div id="education" className="snap-start min-h-screen w-full">
-              <Education />
-            </div>
-            
-            <div id="experience" className="snap-start min-h-screen w-full">
-              <Experience />
+            <div id="dataverse" className="snap-start min-h-screen w-full">
+              <DataverseSection />
             </div>
             
             <div id="projects" className="snap-start min-h-screen w-full">
               <Projects />
             </div>
             
-            <div id="language" className="snap-start min-h-screen w-full">
-              <Language />
+            <div id="gallery" className="snap-start min-h-screen w-full">
+              <Gallery />
             </div>
             
             <div id="contact" className="snap-start min-h-screen w-full">

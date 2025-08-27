@@ -1,23 +1,24 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { socialIcons } from '../data/config';
+import { useSelector } from 'react-redux';
 
 export default function Footer() {
+    const { society } = useSelector((state) => state.allCart);
     const currentYear = new Date().getFullYear();
     
     const links = [
-        { name: 'Home', link: '' },
-        { name: 'Skills', link: '#skills' },
-        { name: 'Education', link: '#education' },
-        { name: 'Experience', link: '#experience' },
-        { name: 'Language', link: '#language' },
+        { name: 'Home', link: '#hero' },
+        { name: 'About Us', link: '#about' },
+        { name: 'Events', link: '#events' },
+        { name: 'DataVerse', link: '#dataverse' },
         { name: 'Projects', link: '#projects' },
+        { name: 'Gallery', link: '#gallery' },
     ];
     
     const otherLinks = [
         { name: 'Privacy Policy', link: '#' },
         { name: 'Terms of Service', link: '#' },
-        { name: 'Sitemap', link: '#' },
     ];
     
     return (
@@ -33,7 +34,7 @@ export default function Footer() {
                             transition={{ duration: 0.5 }}
                             className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4"
                         >
-                            Portfolio
+                            IBA Data Science Society
                         </motion.h2>
                         <motion.p 
                             initial={{ opacity: 0, y: 10 }}
@@ -42,7 +43,7 @@ export default function Footer() {
                             transition={{ duration: 0.5, delay: 0.1 }}
                             className="text-gray-400 mb-6 max-w-md"
                         >
-                            A showcase of my skills, projects, and professional journey. I specialize in creating beautiful, functional, and user-friendly digital experiences.
+                            Empowering students with data-driven thinking at IBA. Our mission is to foster a community of data enthusiasts who collaborate, learn, and innovate together.
                         </motion.p>
                         <motion.div 
                             initial={{ opacity: 0, y: 10 }}
@@ -125,20 +126,20 @@ export default function Footer() {
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m7 9 5 3.5L17 9" />
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2 17V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z" />
                                 </svg>
-                                contact@example.com
-                            </li>
-                            <li className="text-gray-400 flex items-start">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" className="mr-3 mt-1 text-primary flex-shrink-0">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.893 4.871A13.528 13.528 0 0 1 12 4.5c6.2 0 11.5 4.029 11.5 9 0 2.209-1.174 4.215-3.025 5.708.082 1.948.232 3.52.825 4.292-.825 0-3.025-1.324-4.537-2.358a13.84 13.84 0 0 1-4.763.858c-6.2 0-11.5-4.03-11.5-9 0-4.97 5.3-9 11.5-9" />
-                                </svg>
-                                (123) 456-7890
+                                {society.socialLinks.email}
                             </li>
                             <li className="text-gray-400 flex items-start">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" className="mr-3 mt-1 text-primary flex-shrink-0">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.589 0h-.011l.01.011.009.011L12 21l5.782-7.04.009-.011.01-.01Z" />
                                 </svg>
-                                New York, NY, USA
+                                IBA Main Campus, University Road, Karachi
+                            </li>
+                            <li className="text-gray-400 flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" className="mr-3 mt-1 text-primary flex-shrink-0">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.1 15.6H10.9v-10H13.1M21 12c0 5-4 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9Z" />
+                                </svg>
+                                Institute of Business Administration
                             </li>
                         </motion.ul>
                     </div>
@@ -148,7 +149,7 @@ export default function Footer() {
                 <div className="border-t border-white/10 mt-12 pt-6 pb-6">
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <p className="text-gray-400 text-sm mb-4 md:mb-0">
-                            © {currentYear} Portfolio. All rights reserved.
+                            © {currentYear} IBA Data Science Society. All rights reserved.
                         </p>
                         <div className="flex space-x-6">
                             {otherLinks.map((link, index) => (
