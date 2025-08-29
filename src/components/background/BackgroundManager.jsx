@@ -4,40 +4,40 @@ import StaticBackground from './StaticBackground';
 
 function BackgroundManager() {
   const [useStaticBackground, setUseStaticBackground] = useState(false);
-  const [isVercelEnvironment, setIsVercelEnvironment] = useState(false);
-  
-  useEffect(() => {
-    // Check if we're in a Vercel environment by looking at the hostname
-    // This is a simple heuristic - Vercel domains typically end with vercel.app or are custom domains
-    const hostname = window.location.hostname;
-    const isVercel = hostname.includes('vercel.app') || 
-                     !hostname.includes('localhost') && 
-                     !hostname.includes('127.0.0.1') &&
-                     !hostname.includes('.local');
-    
-    // Always use static background on Vercel to ensure stability
-    if (isVercel) {
-      console.log('Vercel environment detected, using static background');
-      setIsVercelEnvironment(true);
+
+  // Simple runtime check for WebGL support in the client browser
+  const isWebGLAvailable = () => {
+    try {
+      const canvas = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+    } catch (e) {
+      return false;
     }
-    
-    // Handle WebGL context lost events as a backup
+  };
+
+  useEffect(() => {
+    // If the client does not support WebGL, fallback to the static background
+    if (!isWebGLAvailable()) {
+      console.log('WebGL not available, using static background');
+      setUseStaticBackground(true);
+    }
+
+    // Handle WebGL context lost events as a backup during runtime
     const handleWebGLContextLost = () => {
       console.log('WebGL context lost, switching to static background');
       setUseStaticBackground(true);
     };
-    
-    // Listen for webglcontextlost events
+
     window.addEventListener('webglcontextlost', handleWebGLContextLost);
-    
+
     return () => {
       window.removeEventListener('webglcontextlost', handleWebGLContextLost);
     };
   }, []);
-  
+
   return (
     <>
-      {(useStaticBackground || isVercelEnvironment) ? (
+      {useStaticBackground ? (
         <StaticBackground />
       ) : (
         <Threebackground fallbackToStatic={() => setUseStaticBackground(true)} />
