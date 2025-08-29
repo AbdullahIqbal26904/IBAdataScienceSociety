@@ -225,9 +225,11 @@ function HeroSection() {
                     </motion.div>
                 </motion.div>
                 
-                {/* Desktop Social media sidebar */}
-                <div className="hidden lg:block fixed left-8 top-1/2 transform -translate-y-1/2 z-50">
-                    <SocialButtons display="vertical" />
+                {/* Desktop Social media sidebar (moved to right and separated) */}
+                <div className="hidden lg:block fixed right-8 top-1/2 transform -translate-y-1/2 z-50">
+                    <div className="bg-black/40 backdrop-blur-md p-3 rounded-xl shadow-lg border border-white/10">
+                        <SocialButtons display="vertical" />
+                    </div>
                 </div>
                 
                 {/* Scroll hint */}

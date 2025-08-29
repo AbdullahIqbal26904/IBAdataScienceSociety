@@ -69,7 +69,7 @@ export default function SocialButtons({ display = "vertical" }) {
                         viewBox={icon.viewBox} 
                         width={isVertical ? 18 : 20} 
                         height={isVertical ? 18 : 20}
-                        className="text-primary"
+                        className={`${isVertical ? 'text-white' : 'text-primary'}`}
                     >
                         <path
                             d={icon.path}

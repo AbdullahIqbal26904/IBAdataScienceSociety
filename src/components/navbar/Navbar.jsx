@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
+import dssLogo from '../../assets/dss_logo.jpg';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -57,21 +58,18 @@ export default function Navbar() {
                 scrolled ? 'backdrop-blur-md bg-black/30' : 'bg-transparent'
             }`}
         >
-            <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-                <a href="#" className="flex title-font font-medium items-center mb-4 md:mb-0">
-                    <motion.span 
-                        whileHover={{ scale: 1.05 }}
-                        className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary"
-                    >
-                        IBA Data Science Society
-                    </motion.span>
+            <div className="container mx-auto flex flex-wrap p-4 md:px-6 flex-col md:flex-row items-center">
+                <a href="#hero" className="flex items-center mb-4 md:mb-0">
+                    <motion.div whileHover={{ scale: 1.03 }} className="flex items-center bg-black/30 backdrop-blur-sm p-1 rounded-full">
+                        <img src={dssLogo} alt="DSS Logo" className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shadow-md" />
+                    </motion.div>
                 </a>
                 
                 {/* Mobile menu button */}
-                <div className="md:hidden ml-auto">
+        <div className="md:hidden ml-auto">
                     <button
                         onClick={toggleMobileMenu}
-                        className="p-2 text-white focus:outline-none"
+            className="p-2 text-white focus:outline-none bg-black/30 rounded-full hover:bg-black/40 transition-colors"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             {mobileMenuOpen ? (
@@ -110,7 +108,7 @@ export default function Navbar() {
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="hidden md:inline-flex items-center py-2 px-7 mt-4 md:mt-0 ml-4 bg-gradient-to-r from-primary to-secondary rounded-full text-black font-medium shadow-lg shadow-yellow-600/20 hover:shadow-yellow-600/40 transition-all duration-300"
+                    className="hidden md:inline-flex items-center py-2 px-6 mt-4 md:mt-0 ml-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white font-semibold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300"
                 >
                     <a href="#contact">Join Us</a>
                 </motion.button>
@@ -142,7 +140,7 @@ export default function Navbar() {
                             <a
                                 href="#contact"
                                 onClick={closeMobileMenu}
-                                className="w-4/5 py-3 mt-2 bg-gradient-to-r from-primary to-secondary rounded-full text-black font-medium text-center"
+                                className="w-4/5 py-3 mt-2 bg-gradient-to-r from-primary to-secondary rounded-full text-white font-medium text-center shadow-md"
                             >
                                 Join Us
                             </a>
